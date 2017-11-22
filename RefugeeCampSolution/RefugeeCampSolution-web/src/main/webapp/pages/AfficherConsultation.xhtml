@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	template="/admin.xhtml">
+	<ui:define name="title"></ui:define>
+	<ui:define name="contentAdmin">
+		<h1 > Consultation List </h1>
+	
+		<h:form id="form" rendered="#{ConsultationBean.formList}">
+			<p:dataTable emptyMessage="No " paginator="true"
+				paginatorPosition="bottom" rows="10"
+				value="#{ConsultationBean.consultations}" var="p">
+				<f:facet name="header">
+					<h:outputText value="List Of  Doctors" />
+				</f:facet>
+				<p:column headerText="Date" >
+					<h:outputText value="#{p.id.dateConsultation}" />
+				</p:column>
+				<p:column headerText="medecinID">
+					<h:outputText value="#{p.id.medecinID}" />
+				</p:column>
+				<p:column headerText="Refugee">
+					<h:outputText value="#{p.id.refugID}" />
+				</p:column>
+				<p:column headerText="maladie">
+					<h:outputText value="#{p.maladie}" />
+				</p:column>
+				<p:column headerText="etat">
+					<h:outputText value="#{p.etat}" />
+				</p:column>
+				
+			<p:column headerText="action">
+					<h:commandButton value="Delete"
+						action="#{ConsultationBean.DeleteConsultation(p)}" update=":medicalCares" />
+						<h:commandButton value="Update"
+						action="#{ConsultationBean.selectEditDispo(p)}" />
+						
+					
+						
+				</p:column>
+				
+				
+			</p:dataTable>
+
+		</h:form>
+		
+		<h:form id="edit" rendered="#{ConsultationBean.formEdit}"
+			enctype="multipart/form-data">
+			<p:panelGrid columns="2">
+			<p:column headerText="maladie">
+					<h:inputText value="#{ConsultationBean.consultationSelected.maladie}" />
+				</p:column>
+				<p:column headerText="etat">
+					<h:inputText value="#{ConsultationBean.consultationSelected.etat}" />
+					</p:column>
+					<h:commandButton action="#{ConsultationBean.doAddOrSaveMedicalCare()}"
+					value=" Update " />
+					</p:panelGrid>
+		</h:form>
+	
+	         
+	
+
+	
+	</ui:define>
+
+
+</ui:composition>

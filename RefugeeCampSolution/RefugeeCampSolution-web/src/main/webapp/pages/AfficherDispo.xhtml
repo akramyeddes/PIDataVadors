@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	template="/layout.xhtml">
+	<ui:define name="title"></ui:define>
+	<ui:define name="content">
+		<h1 > Dispo List </h1>
+	
+		<h:form id="form" rendered="#{DispoBean.formList}">
+		<h:commandButton value="ADD"
+						action="#{DispoBean.selectAddDispo()}" />
+			<p:dataTable emptyMessage="No " paginator="true"
+				paginatorPosition="bottom" rows="10"
+				value="#{DispoBean.mds}" var="p">
+				<f:facet name="header">
+					<h:outputText value="List Of  Doctors" />
+				</f:facet>
+				<p:column headerText="#" >
+					<h:outputText value="#{p.dispoID}" />
+				</p:column>
+				<p:column headerText="Dispo Debut">
+					<h:outputText value="#{p.dateDebut}" />
+				</p:column>
+				<p:column headerText="Dispo Fin">
+					<h:outputText value="#{p.dateFin}" />
+				</p:column>
+		
+			<p:column headerText="action">
+				
+						<h:commandButton value="Edit"
+						action="#{DispoBean.selectEditDispo(p)}" />
+					
+						
+				</p:column>
+				
+				
+			</p:dataTable>
+
+		</h:form>
+		<h:form id="edit" rendered="#{DispoBean.formEdit}"
+			enctype="multipart/form-data">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Debut" /> 
+				<p:calendar value="#{DispoBean.mdselected.dateDebut}" mask="31/12/9999"> <f:convertDateTime pattern="dd/MM/yyyy" /></p:calendar>
+		 	
+		    <p:outputLabel value="Fin" />
+		 	
+		<p:calendar value="#{DispoBean.mdselected.dateFin}" mask="31/12/9999"> <f:convertDateTime pattern="dd/MM/yyyy" /></p:calendar>
+				<h:commandButton action="#{DispoBean.doAddOrSavemedicalEdit()}"
+					value=" Update " />
+				
+
+			</p:panelGrid>
+		</h:form>
+		
+			
+	
+	</ui:define>
+
+
+</ui:composition>
